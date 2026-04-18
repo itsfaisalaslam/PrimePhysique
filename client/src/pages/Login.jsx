@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { buildApiUrl } from "../config/api";
 import api from "../services/api";
 
 const Login = () => {
@@ -24,7 +25,7 @@ const Login = () => {
     setError("");
 
     try {
-      const response = await api.post("/auth/login", formData);
+      const response = await api.post(buildApiUrl("/api/auth/login"), formData);
       const token = response.data?.token;
       const user = response.data?.user;
 
