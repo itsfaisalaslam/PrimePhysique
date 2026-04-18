@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { Link } from "react-router-dom";
-import { buildApiUrl } from "../config/api";
+import API_URL from "../config/api";
 import api from "../services/api";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -53,7 +53,7 @@ const Carousel = () => {
   useEffect(() => {
     const loadSlides = async () => {
       try {
-        const response = await api.get(buildApiUrl("/api/carousel"));
+        const response = await api.get(`${API_URL}/api/carousel`);
         const apiSlides = response.data?.slides;
 
         if (Array.isArray(apiSlides) && apiSlides.length > 0) {

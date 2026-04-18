@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import axiosInstance from "../api/axiosInstance";
-import API_URL from "../config/api";
 
 const AuthContext = createContext(null);
 
@@ -36,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (formData) => {
-    const { data } = await axiosInstance.post(`${API_URL}/api/auth/login`, formData);
+    const { data } = await axiosInstance.post("/auth/login", formData);
     localStorage.setItem("token", data.token);
     localStorage.setItem("primephysique_token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
@@ -46,7 +45,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const register = async (formData) => {
-    const { data } = await axiosInstance.post(`${API_URL}/api/auth/signup`, formData);
+    const { data } = await axiosInstance.post("/auth/signup", formData);
     localStorage.setItem("token", data.token);
     localStorage.setItem("primephysique_token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
