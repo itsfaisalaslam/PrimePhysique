@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { buildApiUrl } from "../config/api";
+import API_URL from "../config/api";
 import api from "../services/api";
 
 const Register = () => {
@@ -28,7 +28,7 @@ const Register = () => {
     setSuccessMessage("");
 
     try {
-      await api.post(buildApiUrl("/api/auth/signup"), formData);
+      await api.post(`${API_URL}/api/auth/signup`, formData);
       setSuccessMessage("Registration successful. Redirecting to login...");
       setTimeout(() => {
         navigate("/login");
