@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { FaCirclePlay, FaYoutube } from "react-icons/fa6";
 
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 const fallbackVideos = [
   {
     id: "UIPvIYsjfpo",
@@ -34,7 +36,7 @@ const YouTubeSection = () => {
   useEffect(() => {
     const loadVideos = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/youtube");
+        const response = await fetch(`${API_URL}/api/youtube`);
         const apiVideos = response.ok ? await response.json() : null;
 
         if (Array.isArray(apiVideos?.videos) && apiVideos.videos.length > 0) {

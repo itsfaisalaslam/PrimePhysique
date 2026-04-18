@@ -10,12 +10,12 @@ export const getNotifications = asyncHandler(async (req, res) => {
 });
 
 export const createNotificationEntry = asyncHandler(async (req, res) => {
-  const { userId, message, type } = req.body;
+  const { userId, title, message, type = "general" } = req.body;
   const targetUserId = userId || req.user._id;
 
-  if (!message || !type) {
+  if (!title || !message) {
     res.status(400);
-    throw new Error("message and type are required.");
+    throw new Error("title and message are required.");
   }
 
   if (String(targetUserId) !== String(req.user._id) && !req.user.isAdmin) {
@@ -25,6 +25,7 @@ export const createNotificationEntry = asyncHandler(async (req, res) => {
 
   const notification = await Notification.create({
     userId: targetUserId,
+    title,
     message,
     type
   });
@@ -36,18 +37,19 @@ export const createNotificationEntry = asyncHandler(async (req, res) => {
 });
 
 export const markNotificationAsRead = asyncHandler(async (req, res) => {
-  const notification = await Notification.findOne({
-    _id: req.params.id,
-    userId: req.user._id
-  });
+  const notification = await Notification.findOneAndUpdate(
+    {
+      _id: req.params.id,
+      userId: req.user._id
+    },
+    { isRead: true },
+    { new: true }
+  );
 
   if (!notification) {
     res.status(404);
     throw new Error("Notification not found.");
   }
-
-  notification.isRead = true;
-  await notification.save();
 
   res.json({
     message: "Notification marked as read.",

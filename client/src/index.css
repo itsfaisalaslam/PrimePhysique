@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -14,13 +14,24 @@
   }
 
   body {
-    @apply bg-slate-950 font-body text-slate-100 antialiased;
-    background-image:
-      radial-gradient(circle at top left, rgba(20, 184, 166, 0.16), transparent 24%),
-      radial-gradient(circle at top right, rgba(14, 165, 233, 0.12), transparent 26%),
-      radial-gradient(circle at bottom, rgba(249, 115, 22, 0.08), transparent 22%),
-      linear-gradient(180deg, #020617 0%, #020617 44%, #06121f 100%);
+    @apply antialiased;
+    font-family: "Inter", sans-serif;
+    background: #050b1a;
+    color: #e2e8f0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    color: #94a3b8;
   }
 
   * {
@@ -38,8 +49,12 @@
 }
 
 @layer components {
+  .page-shell {
+    @apply mx-auto w-full max-w-7xl space-y-8 sm:space-y-10;
+  }
+
   .card {
-    @apply rounded-[28px] border border-white/10 bg-slate-900/70 shadow-[0_28px_90px_rgba(2,6,23,0.38)] backdrop-blur-xl transition duration-300;
+    @apply rounded-[28px] border border-white/5 bg-[#081225] p-6 shadow-[0_24px_70px_rgba(2,6,23,0.32)] transition-all duration-300;
   }
 
   .card-hover {
@@ -47,11 +62,11 @@
   }
 
   .surface {
-    @apply rounded-[32px] border border-white/10 bg-slate-900/70 shadow-[0_28px_90px_rgba(2,6,23,0.4)] backdrop-blur-xl;
+    @apply rounded-[30px] border border-white/5 bg-[#081225] shadow-[0_28px_90px_rgba(2,6,23,0.38)] backdrop-blur-xl;
   }
 
   .surface-muted {
-    @apply rounded-[28px] border border-white/10 bg-slate-950/65 backdrop-blur-xl;
+    @apply rounded-[24px] border border-white/5 bg-[#050f20] backdrop-blur-xl;
   }
 
   .page-stack {
@@ -86,12 +101,36 @@
     @apply inline-flex items-center rounded-full border border-white/10 bg-white/5 px-3.5 py-1.5 text-sm font-medium text-slate-200;
   }
 
+  .status-badge {
+    @apply inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium uppercase tracking-wide;
+  }
+
+  .status-success {
+    @apply border-emerald-500/20 bg-emerald-500/10 text-emerald-200;
+  }
+
+  .status-warning {
+    @apply border-amber-500/20 bg-amber-500/10 text-amber-200;
+  }
+
+  .status-danger {
+    @apply border-rose-500/20 bg-rose-500/10 text-rose-200;
+  }
+
+  .status-info {
+    @apply border-sky-500/20 bg-sky-500/10 text-sky-200;
+  }
+
+  .status-neutral {
+    @apply border-slate-500/20 bg-slate-500/10 text-slate-300;
+  }
+
   .pill-active {
     @apply border-brand-400/20 bg-brand-400/15 text-brand-200;
   }
 
   .empty-state {
-    @apply rounded-[28px] border border-dashed border-white/10 bg-slate-900/55 p-6 text-slate-400 backdrop-blur-xl;
+    @apply rounded-[28px] border border-dashed border-white/10 bg-slate-900/55 p-6 text-center text-slate-400 backdrop-blur-xl;
   }
 
   .glass-divider {
@@ -99,23 +138,74 @@
   }
 
   .app-shell {
-    @apply mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10 lg:px-8;
+    @apply mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8;
   }
 
   .input {
     @apply w-full rounded-2xl border border-white/10 bg-slate-950/80 px-4 py-3 text-slate-100 outline-none transition duration-200 placeholder:text-slate-500 focus:border-brand-400 focus:ring-4 focus:ring-brand-400/15;
   }
 
+  .form-label {
+    @apply mb-2 block text-sm font-medium text-slate-300;
+  }
+
+  .alert-error {
+    @apply rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200;
+  }
+
+  .alert-success {
+    @apply rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200;
+  }
+
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-2xl bg-brand-500 px-5 py-3 font-semibold text-slate-950 shadow-[0_16px_35px_rgba(20,184,166,0.28)] transition duration-200 hover:-translate-y-0.5 hover:bg-brand-400 focus:outline-none focus:ring-4 focus:ring-brand-400/20 disabled:cursor-not-allowed disabled:opacity-70;
+    @apply inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white focus:outline-none focus:ring-4 focus:ring-brand-400/20 disabled:cursor-not-allowed disabled:opacity-70;
+    background: linear-gradient(to right, #14b8a6, #06b6d4);
+    transition: all 0.3s ease;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 px-5 py-3 font-semibold text-slate-100 transition duration-200 hover:-translate-y-0.5 hover:border-brand-400/30 hover:bg-brand-400/10 hover:text-white focus:outline-none focus:ring-4 focus:ring-brand-400/10 disabled:cursor-not-allowed disabled:opacity-70;
+    @apply inline-flex items-center justify-center rounded-xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-100 transition duration-200 hover:-translate-y-0.5 hover:border-brand-400/30 hover:bg-brand-400/10 hover:text-white focus:outline-none focus:ring-4 focus:ring-brand-400/10 disabled:cursor-not-allowed disabled:opacity-70;
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-300 transition duration-200 hover:bg-white/5 hover:text-white;
+  }
+
+  .table-shell {
+    @apply overflow-hidden rounded-[24px] border border-white/5 bg-[#081225] shadow-[0_18px_50px_rgba(2,6,23,0.26)];
+  }
+
+  .table-scroll {
+    @apply overflow-x-auto;
+  }
+
+  .table-base {
+    @apply min-w-full border-collapse text-sm;
+  }
+
+  .table-head {
+    @apply bg-slate-900/90 text-left text-xs uppercase tracking-[0.18em] text-slate-400;
+  }
+
+  .table-header-cell {
+    @apply px-3 py-3 font-semibold;
+  }
+
+  .table-row {
+    @apply border-t border-white/5 bg-slate-950/60 transition duration-200 hover:bg-white/[0.03];
+  }
+
+  .table-cell {
+    @apply px-3 py-3 align-top text-slate-300;
+  }
+
+  .auth-card {
+    @apply mx-auto w-full max-w-md rounded-[28px] border border-white/5 bg-[#081225] p-8 shadow-[0_28px_90px_rgba(2,6,23,0.36)] backdrop-blur-xl;
   }
 
   .fade-in-up {

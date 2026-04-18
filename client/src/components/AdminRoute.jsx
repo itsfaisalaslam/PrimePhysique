@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({ children }) => {
+const AdminRoute = ({ children }) => {
   const token = localStorage.getItem("token") || localStorage.getItem("primephysique_token");
   const storedUser = localStorage.getItem("user") || localStorage.getItem("primephysique_user");
   let currentUser = null;
@@ -15,7 +15,11 @@ const PrivateRoute = ({ children }) => {
     return <Navigate to="/login" replace />;
   }
 
+  if (!currentUser?.isAdmin) {
+    return <Navigate to="/dashboard" replace />;
+  }
+
   return children;
 };
 
-export default PrivateRoute;
+export default AdminRoute;

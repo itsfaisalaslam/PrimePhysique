@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const loadUser = async () => {
-    const token = localStorage.getItem("primephysique_token");
+    const token = localStorage.getItem("token") || localStorage.getItem("primephysique_token");
 
     if (!token) {
       setLoading(false);
@@ -20,7 +20,10 @@ export const AuthProvider = ({ children }) => {
       const { data } = await axiosInstance.get("/users/me");
       setUser(data.user);
     } catch (error) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
       localStorage.removeItem("primephysique_token");
+      localStorage.removeItem("primephysique_user");
       setUser(null);
     } finally {
       setLoading(false);
@@ -33,20 +36,29 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (formData) => {
     const { data } = await axiosInstance.post("/auth/login", formData);
+    localStorage.setItem("token", data.token);
     localStorage.setItem("primephysique_token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("primephysique_user", JSON.stringify(data.user));
     setUser(data.user);
     return data;
   };
 
   const register = async (formData) => {
     const { data } = await axiosInstance.post("/auth/register", formData);
+    localStorage.setItem("token", data.token);
     localStorage.setItem("primephysique_token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    localStorage.setItem("primephysique_user", JSON.stringify(data.user));
     setUser(data.user);
     return data;
   };
 
   const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     localStorage.removeItem("primephysique_token");
+    localStorage.removeItem("primephysique_user");
     setUser(null);
   };
 

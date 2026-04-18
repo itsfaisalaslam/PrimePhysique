@@ -40,7 +40,7 @@ const Register = () => {
   };
 
   return (
-    <div className="mx-auto max-w-md rounded-3xl border border-slate-800 bg-slate-900/75 p-8 shadow-glow backdrop-blur">
+    <div className="auth-card fade-in-up">
       <h1 className="text-3xl font-bold text-white">Create Account</h1>
       <p className="mt-2 text-slate-400">Join PrimePhysique and start tracking your fitness journey.</p>
 
@@ -94,15 +94,11 @@ const Register = () => {
         </div>
 
         {error && (
-          <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
-            {error}
-          </div>
+          <div className="alert-error">{error}</div>
         )}
 
         {successMessage && (
-          <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-200">
-            {successMessage}
-          </div>
+          <div className="alert-success">{successMessage}</div>
         )}
 
         <button type="submit" className="btn-primary w-full" disabled={loading}>

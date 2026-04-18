@@ -1,13 +1,16 @@
 import Notification from "../models/Notification.js";
 
-export const createNotification = async ({ userId, message, type }) => {
-  if (!userId || !message || !type) {
+const allowedTypes = ["expiry", "payment", "general"];
+
+export const createNotification = async ({ userId, title, message, type = "general" }) => {
+  if (!userId || !message) {
     return null;
   }
 
   return Notification.create({
     userId,
+    title: title || "PrimePhysique Update",
     message,
-    type
+    type: allowedTypes.includes(type) ? type : "general"
   });
 };

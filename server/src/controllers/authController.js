@@ -23,7 +23,7 @@ const sanitizeUser = (user) => ({
 });
 
 export const signup = asyncHandler(async (req, res) => {
-  const { name, email, password, age, height, weight, goal, isAdmin } = req.body;
+  const { name, email, password, age, height, weight, goal } = req.body;
 
   if (!name || !email || !password) {
     res.status(400);
@@ -48,7 +48,9 @@ export const signup = asyncHandler(async (req, res) => {
     height,
     weight,
     goal,
-    isAdmin
+    // Never trust role data from the client during public signup.
+    // All new registrations must start as normal users.
+    isAdmin: false
   });
 
   res.status(201).json({
@@ -70,12 +72,19 @@ export const login = asyncHandler(async (req, res) => {
     throw new Error("JWT_SECRET is not configured.");
   }
 
+  // Temporary debug log to verify which email is being requested during login.
+  console.log("Requested login email:", email);
+
   const user = await User.findOne({ email });
 
   if (!user) {
     res.status(401);
     throw new Error("Invalid email or password.");
   }
+
+  // Temporary debug logs to confirm the admin flag coming from MongoDB.
+  console.log("Found user email:", user.email);
+  console.log("Found user isAdmin:", user.isAdmin);
 
   const isMatch = await bcrypt.compare(password, user.password);
 
@@ -86,6 +95,11 @@ export const login = asyncHandler(async (req, res) => {
 
   res.json({
     token: generateToken(user._id),
-    user: sanitizeUser(user)
+    user: {
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin
+    }
   });
 });

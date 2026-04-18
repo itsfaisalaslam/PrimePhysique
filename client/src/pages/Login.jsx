@@ -26,13 +26,29 @@ const Login = () => {
     try {
       const response = await api.post("/auth/login", formData);
       const token = response.data?.token;
+      const user = response.data?.user;
+
+      // Temporary debug logs to verify the admin flag coming from the backend.
+      console.log("Login response user:", user);
+      console.log("Login response user.isAdmin:", user?.isAdmin);
 
       if (!token) {
         throw new Error("Token not received from server.");
       }
 
+      localStorage.setItem("token", token);
       localStorage.setItem("primephysique_token", token);
-      navigate("/dashboard");
+
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("primephysique_user", JSON.stringify(user));
+      }
+
+      if (user?.isAdmin === true) {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (requestError) {
       setError(requestError.response?.data?.message || requestError.message || "Login failed.");
     } finally {
@@ -41,7 +57,7 @@ const Login = () => {
   };
 
   return (
-    <div className="mx-auto max-w-md rounded-3xl border border-slate-800 bg-slate-900/75 p-8 shadow-glow backdrop-blur">
+    <div className="auth-card fade-in-up">
       <h1 className="text-3xl font-bold text-white">Login</h1>
       <p className="mt-2 text-slate-400">Sign in to access your PrimePhysique dashboard.</p>
 
@@ -79,9 +95,7 @@ const Login = () => {
         </div>
 
         {error && (
-          <div className="rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3 text-sm text-rose-200">
-            {error}
-          </div>
+          <div className="alert-error">{error}</div>
         )}
 
         <button type="submit" className="btn-primary w-full" disabled={loading}>

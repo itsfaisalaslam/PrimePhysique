@@ -3,8 +3,8 @@ import SocialLinks from "./SocialLinks";
 
 const Footer = () => {
   return (
-    <footer className="mt-20 border-t border-slate-800/80 bg-slate-950/70">
-      <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_1fr] lg:px-8">
+    <footer className="mt-16 border-t border-white/5 bg-slate-950/70">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-[1fr_1fr] lg:px-8">
         <div className="space-y-5">
           <Link to="/" className="text-2xl font-extrabold tracking-tight text-white">
             Prime<span className="text-brand-400">Physique</span>

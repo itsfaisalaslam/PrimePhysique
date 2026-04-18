@@ -7,6 +7,11 @@ const notificationSchema = new mongoose.Schema(
       ref: "User",
       required: true
     },
+    title: {
+      type: String,
+      required: true,
+      trim: true
+    },
     message: {
       type: String,
       required: true,
@@ -14,8 +19,8 @@ const notificationSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      enum: ["workout", "diet", "reminder"],
-      required: true
+      enum: ["expiry", "payment", "general"],
+      default: "general"
     },
     isRead: {
       type: Boolean,
